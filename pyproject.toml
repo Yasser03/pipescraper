@@ -1,0 +1,108 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pipescraper"
+version = "0.3.0"
+description = "A pipe-based news article scraping and metadata extraction library"
+readme = "README.md"
+authors = [
+    {name = "PipeScraper Contributors", email = "contact@pipescraper.dev"}
+]
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Internet :: WWW/HTTP :: Indexing/Search",
+    "Topic :: Text Processing :: Markup :: HTML",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+]
+keywords = [
+    "web scraping",
+    "news extraction",
+    "article metadata",
+    "trafilatura",
+    "newspaper4k",
+    "pipe operator",
+    "data pipeline",
+    "nlp",
+    "text extraction",
+]
+dependencies = [
+    "trafilatura>=1.6.0",
+    "newspaper4k>=0.9.5",
+    "pandas>=1.3.0",
+    "requests>=2.27.0",
+    "beautifulsoup4>=4.10.0",
+    "lxml>=4.9.0",
+]
+requires-python = ">=3.8"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+]
+pipeframe = [
+    "pipeframe>=0.1.0",
+]
+pipeplotly = [
+    "pipeplotly>=0.1.0",
+]
+all = [
+    "pipeframe>=0.1.0",
+    "pipeplotly>=0.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Yasser03/pipescraper"
+Documentation = "https://github.com/Yasser03/pipescraper#readme"
+Repository = "https://github.com/Yasser03/pipescraper"
+"Bug Tracker" = "https://github.com/Yasser03/pipescraper/issues"
+
+[tool.setuptools]
+packages = ["pipescraper"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --strict-markers"
+
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
