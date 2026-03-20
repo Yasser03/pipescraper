@@ -11,7 +11,7 @@ pipescraper provides a natural language verb-based interface for scraping news w
 from pipescraper import *
 
 # Your scraping pipeline reads like a story
-result = ("https://news-site.com" 
+result = ("https://www.bbc.com/news"   # Replace with your target URL
     >> FetchLinks(max_links=10) 
     >> ExtractArticles() 
     >> FilterArticles(lambda a: a.language == 'en')
@@ -30,7 +30,7 @@ result = ("https://news-site.com"
 
 ```python
 # ❌ Traditional logic is nested, hard to read, and error-prone
-urls = fetch_links("https://news-site.com", max_links=10)
+urls = fetch_links("https://www.bbc.com/news", max_links=10)  # Replace with your target URL
 articles = []
 for url in urls:
     time.sleep(1)
@@ -40,7 +40,7 @@ for url in urls:
 save_to_csv(articles, "articles.csv")
 
 # ✅ pipescraper: Clear and intuitive
-("https://news-site.com" 
+("https://www.bbc.com/news"   # Replace with your target URL
     >> FetchLinks(max_links=10) 
     >> ExtractArticles(delay=1.0) 
     >> FilterArticles(lambda a: a.language == 'en' and bool(a.author)) 
@@ -92,7 +92,7 @@ pip install -e .
 from pipescraper import FetchLinks, ExtractArticles, ToDataFrame, SaveAs
 
 # Simple pipeline: URL → Links → Articles → DataFrame → CSV
-df = ("https://news-site.com" 
+df = ("https://www.bbc.com/news"   # Replace with your target URL
       >> FetchLinks(max_links=10) 
       >> ExtractArticles() 
       >> ToDataFrame() 
@@ -111,7 +111,7 @@ Chain operations naturally without nested function calls or loops:
 
 ```python
 # PipeScraper approach (reads like a recipe)
-articles = ("https://news-site.com"
+articles = ("https://www.bbc.com/news"  # Replace with your target URL
     >> FetchLinks(max_links=20)
     >> ExtractArticles(skip_errors=True)
     >> Deduplicate()
@@ -157,7 +157,7 @@ Scrape safely and heavily concurrently using multi-threaded workers.
 
 ```python
 # Scrape 50 articles in parallel using 10 workers
-df = ("https://news-site.com" 
+df = ("https://www.bbc.com/news"   # Replace with your target URL
       >> FetchLinks(max_links=50) 
       >> ExtractArticles(workers=10) 
       >> ToDataFrame())
@@ -193,7 +193,7 @@ from pipeframe import filter, arrange, group_by, summarize
 from pipeplotly import ggplot, aes, geom_bar, theme_minimal
 
 # Full Pipeline: Scrape -> Mutate -> Group -> Plot
-fig = ("https://news-site.com" 
+fig = ("https://www.bbc.com/news"   # Replace with your target URL
        >> FetchLinks(max_links=20) 
        >> ExtractArticles() 
        >> ToPipeFrame() 
@@ -215,7 +215,7 @@ fig.show()
 Configure delays and robots.txt compliance.
 
 ```python
-result = ("https://news-site.com" 
+result = ("https://www.bbc.com/news"   # Replace with your target URL
           >> FetchLinks(
               max_links=50,
               respect_robots=True,
@@ -235,7 +235,7 @@ result = ("https://news-site.com"
 Extract from a specific URL or list of URLs without link discovery.
 
 ```python
-df = ("https://news-site.com/specific-article" 
+df = ("https://www.bbc.com/news/specific-article"   # Replace with your target URL
       >> ExtractArticles() 
       >> ToDataFrame() 
       >> SaveAs("single_article.json"))

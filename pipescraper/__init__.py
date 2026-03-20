@@ -9,7 +9,7 @@ visualization, enabling complete end-to-end pipelines from scraping to analysis.
 
 Example:
     >>> from pipescraper import FetchLinks, ExtractArticles, ToDataFrame, SaveAs
-    >>> ("https://news-site.com" >> 
+    >>> ("https://www.bbc.com/news" >>   # Replace with your target URL
     ...  FetchLinks() >> 
     ...  ExtractArticles() >> 
     ...  ToDataFrame() >> 
@@ -18,7 +18,7 @@ Example:
     >>> # With PipeFrame integration
     >>> from pipescraper import FetchLinks, ExtractArticles, ToPipeFrame
     >>> from pipeframe import select, filter, arrange
-    >>> ("https://news-site.com" >> 
+    >>> ("https://www.bbc.com/news" >>   # Replace with your target URL
     ...  FetchLinks() >> 
     ...  ExtractArticles() >> 
     ...  ToPipeFrame() >>

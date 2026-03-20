@@ -59,7 +59,7 @@ All PipeFrame verbs can be imported directly from `pipescraper` or from `pipefra
 from pipescraper import FetchLinks, ExtractArticles, ToPipeFrame
 from pipeframe import select, filter, arrange
 
-result = ("https://news-site.com" >> 
+result = ("https://www.bbc.com/news" >>   # Replace with your target URL
           FetchLinks(max_links=20) >>
           ExtractArticles() >>
           ToPipeFrame() >>
@@ -74,7 +74,7 @@ result = ("https://news-site.com" >>
 from pipescraper import FetchLinks, ExtractArticles, ToPipeFrame, SaveAs
 from pipeframe import select, mutate, filter, arrange
 
-result = ("https://news-site.com" >> 
+result = ("https://www.bbc.com/news" >>   # Replace with your target URL
           FetchLinks(max_links=30) >>
           ExtractArticles() >>
           ToPipeFrame() >>
@@ -99,7 +99,7 @@ print(f"Processed {len(result)} articles")
 from pipescraper import FetchLinks, ExtractArticles, ToPipeFrame
 from pipeframe import group_by, summarize, mutate, arrange
 
-summary = ("https://news-site.com" >> 
+summary = ("https://www.bbc.com/news" >>   # Replace with your target URL
            FetchLinks(max_links=50) >>
            ExtractArticles() >>
            ToPipeFrame() >>
@@ -159,7 +159,7 @@ All PipePlotly functions can be imported directly from `pipescraper` or from `pi
 from pipescraper import FetchLinks, ExtractArticles, ToPipeFrame
 from pipeplotly import ggplot, aes, geom_bar, labs, theme_minimal
 
-fig = ("https://news-site.com" >> 
+fig = ("https://www.bbc.com/news" >>   # Replace with your target URL
        FetchLinks(max_links=20) >>
        ExtractArticles() >>
        ToPipeFrame(include_text=False) >>
@@ -178,7 +178,7 @@ from pipescraper import FetchLinks, ExtractArticles, ToPipeFrame
 from pipeframe import mutate, filter
 from pipeplotly import ggplot, aes, geom_point, labs, theme_minimal
 
-fig = ("https://news-site.com" >> 
+fig = ("https://www.bbc.com/news" >>   # Replace with your target URL
        FetchLinks(max_links=30) >>
        ExtractArticles() >>
        ToPipeFrame() >>
@@ -207,7 +207,7 @@ from pipeframe import filter, mutate
 from pipeplotly import ggplot, aes, geom_line, labs
 import pandas as pd
 
-fig = ("https://news-site.com" >> 
+fig = ("https://www.bbc.com/news" >>   # Replace with your target URL
        FetchLinks(max_links=50) >>
        ExtractArticles() >>
        ToPipeFrame(include_text=False) >>
@@ -240,7 +240,7 @@ from pipescraper import (
 )
 
 # Get data
-data = ("https://news-site.com" >> 
+data = ("https://www.bbc.com/news" >>   # Replace with your target URL
         FetchLinks(max_links=30) >>
         ExtractArticles() >>
         ToPipeFrame())

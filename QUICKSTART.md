@@ -32,7 +32,7 @@ from pipescraper import FetchLinks, ExtractArticles, ToDataFrame, SaveAs
 ### 2. Create a Simple Pipeline
 
 ```python
-result = ("https://news-site.com" >> 
+result = ("https://www.bbc.com/news" >>   # Replace with your target URL
           FetchLinks(max_links=10) >> 
           ExtractArticles() >> 
           ToDataFrame() >> 
@@ -82,7 +82,7 @@ Article(
 
 ```python
 # Only English articles with authors
-result = ("https://news-site.com" >> 
+result = ("https://www.bbc.com/news" >>   # Replace with your target URL
           FetchLinks(max_links=20) >>
           ExtractArticles() >>
           FilterArticles(lambda a: a.language == 'en') >>
@@ -95,7 +95,7 @@ result = ("https://news-site.com" >>
 
 ```python
 # Get only the first 5 articles
-result = ("https://news-site.com" >> 
+result = ("https://www.bbc.com/news" >>   # Replace with your target URL
           FetchLinks(max_links=50) >>
           ExtractArticles() >>
           LimitArticles(5) >>
@@ -107,7 +107,7 @@ result = ("https://news-site.com" >>
 
 ```python
 # Speed up scraping with multiple workers (recommended: 5-10)
-result = ("https://news-site.com" >> 
+result = ("https://www.bbc.com/news" >>   # Replace with your target URL
           FetchLinks(max_links=50) >>
           ExtractArticles(workers=5) >>
           ToDataFrame() >>
@@ -119,7 +119,7 @@ print(f"Turbo Scraped {len(result)} articles in record time!")
 ### Multiple Export Formats
 
 ```python
-df = ("https://news-site.com" >> 
+df = ("https://www.bbc.com/news" >>   # Replace with your target URL
       FetchLinks(max_links=10) >>
       ExtractArticles() >>
       ToDataFrame())
@@ -135,7 +135,7 @@ df >> SaveAs("articles.parquet")
 
 ```python
 # Get DataFrame for analysis
-df = ("https://news-site.com" >> 
+df = ("https://www.bbc.com/news" >>   # Replace with your target URL
       FetchLinks(max_links=20) >>
       ExtractArticles() >>
       ToDataFrame())
@@ -155,7 +155,7 @@ df_sorted = df.sort_values('date_published', ascending=False)
 
 ```python
 # Add delays and respect robots.txt
-result = ("https://news-site.com" >> 
+result = ("https://www.bbc.com/news" >>   # Replace with your target URL
           FetchLinks(
               max_links=10,
               respect_robots=True,    # Check robots.txt
