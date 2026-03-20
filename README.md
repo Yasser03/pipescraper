@@ -264,9 +264,10 @@ df = ("https://www.bbc.com/news/specific-article"   # Replace with your target U
 
 ## 🎓 Learning Resources
 
-- **[Tutorial.ipynb](Tutorial.ipynb)** - A complete, hands-on, end-to-end walkthrough
+- **[Tutorial Notebook](Tutorial.ipynb)** - A complete, hands-on, end-to-end walkthrough
 - **[API Reference](API_REFERENCE.md)** - Detailed core documentation
-- **[Examples directory](examples/)** - More advanced usage examples
+- **[Examples](examples/)** - More advanced usage examples
+- **[Contributing Guide](CONTRIBUTING.md)** - How to contribute
 
 ---
 
