@@ -41,7 +41,7 @@ pipescraper/
 Contains:
 - **`Article`** dataclass — Immutable article representation
 - **`LinkFetcher`** — Discovers article URLs from base pages
-- **`ArticleExtractor`** — Extracts metadata using trafilatura + newspaper3k
+- **`ArticleExtractor`** — Extracts metadata using trafilatura + newspaper4k
 
 **Why?** Separates extraction logic from user-facing API.
 
@@ -99,14 +99,14 @@ step2 = ExtractArticles().__rrshift__(step1)   # Returns list of Articles
 
 **Problem:** Trafilatura doesn't extract publication *time*, only *date*.
 
-**Solution:** Use newspaper3k as supplementary parser.
+**Solution:** Use newspaper4k as supplementary parser.
 
 ```python
 # Extract with trafilatura (primary)
 metadata = trafilatura.extract_metadata(html)
 text = trafilatura.extract(html)
 
-# Supplement with newspaper3k for time
+# Supplement with newspaper4k for time
 if extract_time:
     np_article = NewspaperArticle(url)
     np_article.download(input_html=html)
@@ -132,7 +132,7 @@ PipeScraper implements a specialized `_decode_gnews_url` method that:
 **Trade-offs:**
 - ✅ Get complete temporal metadata
 - ✅ Keep trafilatura's superior text extraction
-- ⚠️ Additional dependency (newspaper3k)
+- ⚠️ Additional dependency (newspaper4k)
 - ⚠️ Slightly slower (two parsing passes)
 
 **Decision:** Worth it for complete metadata.
@@ -362,7 +362,7 @@ class MyFilter(PipeBase):
 ## 📚 References
 
 - **Trafilatura**: https://github.com/adbar/trafilatura
-- **Newspaper3k**: https://github.com/codelucas/newspaper/
+- **Newspaper4k**: https://github.com/AndyTheFactory/newspaper4k
 - **PipeFrame**: https://github.com/Yasser03/pipeframe
 - **PipePlotly**: https://github.com/Yasser03/pipeplotly
 

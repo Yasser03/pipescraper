@@ -69,7 +69,7 @@ Article(
     description="Article summary",
     author="John Doe",
     date_published="2024-01-15",
-    time_published="14:30:00",  # ⭐ Time extraction via newspaper3k
+    time_published="14:30:00",  # ⭐ Time extraction via newspaper4k
     language="en",
     tags=["tech", "news"],
     image_url="https://example.com/image.jpg"

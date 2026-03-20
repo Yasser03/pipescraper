@@ -5,7 +5,7 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-pipescraper provides a natural language verb-based interface for scraping news websites and extracting structured article metadata using the intuitive pipe (`>>`) operator. Built on top of [trafilatura](https://github.com/adbar/trafilatura) with supplementary time extraction via [newspaper3k](https://github.com/codelucas/newspaper/), pipescraper combines powerful extraction capabilities with an elegant, chainable API.
+pipescraper provides a natural language verb-based interface for scraping news websites and extracting structured article metadata using the intuitive pipe (`>>`) operator. Built on top of [trafilatura](https://github.com/adbar/trafilatura) with supplementary time extraction via [newspaper4k](https://github.com/AndyTheFactory/newspaper4k), pipescraper combines powerful extraction capabilities with an elegant, chainable API.
 
 ```python
 from pipescraper import *
@@ -171,17 +171,17 @@ Each article contains the following fields:
 | ---------------- | ----------------------------- | ------------------------- |
 | `url`            | Article URL                   | Input                     |
 | `source`         | Domain/source name            | Parsed                    |
-| `title`          | Article headline              | Trafilatura / newspaper3k |
+| `title`          | Article headline              | Trafilatura / newspaper4k |
 | `text`           | Main article content          | Trafilatura               |
 | `description`    | Article summary               | Trafilatura               |
-| `author`         | Author name(s)                | Trafilatura / newspaper3k |
-| `date_published` | Publication date (YYYY-MM-DD) | Trafilatura / newspaper3k |
-| `time_published` | Publication time (HH:MM:SS)   | **newspaper3k** ⭐         |
+| `author`         | Author name(s)                | Trafilatura / newspaper4k |
+| `date_published` | Publication date (YYYY-MM-DD) | Trafilatura / newspaper4k |
+| `time_published` | Publication time (HH:MM:SS)   | **newspaper4k** ⭐         |
 | `language`       | Language code (e.g., 'en')    | Trafilatura               |
 | `tags`           | Article tags/categories       | Trafilatura               |
-| `image_url`      | Main article image            | Trafilatura / newspaper3k |
+| `image_url`      | Main article image            | Trafilatura / newspaper4k |
 
-⭐ **Note**: `time_published` is extracted via newspaper3k to supplement trafilatura, which only provides dates.
+⭐ **Note**: `time_published` is extracted via newspaper4k to supplement trafilatura, which only provides dates.
 
 ### Data Manipulation & Visualization
 
@@ -251,14 +251,14 @@ df = ("https://news-site.com/specific-article"
 |---------|-------------|-------------|
 | Content extraction | ✅ (via trafilatura) | ✅ |
 | Metadata extraction | ✅ Enhanced | ✅ Basic |
-| Publication time | ✅ (via newspaper3k) | ❌ (date only) |
+| Publication time | ✅ (via newspaper4k) | ❌ (date only) |
 | Pipe syntax | ✅ | ❌ |
 | Link discovery | ✅ | ❌ |
 | Batch / Parallel | ✅ | Manual |
 | DataFrame export | ✅ (CSV/JSON/Excel)| ❌ |
 | Google News Filter | ✅ | ❌ |
 
-**Design Decision:** pipescraper uses a **dual-engine approach**. Trafilatura provides industry-leading content extraction, while newspaper3k complements it by capturing the exact `time_published`, ensuring complete temporal metadata.
+**Design Decision:** pipescraper uses a **dual-engine approach**. Trafilatura provides industry-leading content extraction, while newspaper4k complements it by capturing the exact `time_published`, ensuring complete temporal metadata.
 
 ---
 

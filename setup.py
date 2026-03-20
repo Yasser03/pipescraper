@@ -69,7 +69,7 @@ setup(
         "news extraction",
         "article metadata",
         "trafilatura",
-        "newspaper3k",
+        "newspaper4k",
         "pipe operator",
         "data pipeline",
         "nlp",

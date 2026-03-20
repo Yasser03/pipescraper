@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.3] - 2026-03-07
 
 ### Fixed
-- **Newspaper3k Attribute Error** — Resolved `AttributeError: 'Article' object has no attribute 'set_html'` by renaming internal `Article` class to `ScrapedArticle` to avoid name collisions with `newspaper.Article`.
+- **Newspaper4k Attribute Error** — Resolved `AttributeError: 'Article' object has no attribute 'set_html'` by renaming internal `Article` class to `ScrapedArticle` to avoid name collisions with `newspaper.Article`.
 - **Robust Extraction** — Improved stability when extracting publication time; the library now gracefully handles missing or broken `newspaper` installations.
 
 ## [0.2.2] - 2026-03-07
@@ -77,14 +77,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial release of pipescraper
 - Core pipe-based syntax using `>>` operator
 - `FetchLinks` verb for discovering article URLs from news sites
-- `ExtractArticles` verb for metadata extraction via trafilatura and newspaper3k
+- `ExtractArticles` verb for metadata extraction via trafilatura and newspaper4k
 - `ToDataFrame` verb for converting to pandas DataFrame
 - `SaveAs` verb supporting CSV, JSON, Excel, and Parquet formats
 - `FilterArticles` verb for conditional filtering
 - `LimitArticles` verb for limiting result sets
 - `Deduplicate` verb for removing duplicate articles by URL
 - `Article` dataclass with comprehensive metadata fields
-- Publication time extraction via newspaper3k (supplements trafilatura's date-only extraction)
+- Publication time extraction via newspaper4k (supplements trafilatura's date-only extraction)
 - Robots.txt compliance and request throttling
 - Comprehensive test suite with pytest
 - Full documentation and usage examples
@@ -93,14 +93,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Features
 - **11 metadata fields extracted**: url, source, title, text, description, author, date_published, time_published, language, tags, image_url
-- **Dual extraction engine**: trafilatura (primary) + newspaper3k (time supplementation)
+- **Dual extraction engine**: trafilatura (primary) + newspaper4k (time supplementation)
 - **Multiple export formats**: CSV, JSON, Excel (.xlsx), Parquet
 - **Respectful scraping**: Built-in delays, robots.txt checking, user-agent configuration
 - **Error handling**: Graceful degradation with skip_errors option
 - **Pandas integration**: Direct DataFrame output for analysis
 
 ### Design Decisions
-- Chose dual-engine approach (trafilatura + newspaper3k) to capture both high-quality content extraction and full timestamp metadata
+- Chose dual-engine approach (trafilatura + newspaper4k) to capture both high-quality content extraction and full timestamp metadata
 - Implemented pipe syntax via `__rrshift__` following pipeframe/pipeplotly patterns
 - Used dataclasses for Article representation for immutability and type safety
 - Made all pipe verbs inherit from PipeBase for consistent interface
