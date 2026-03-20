@@ -10,23 +10,23 @@ Example:
     >>> from pipeplotly import ggplot, aes, geom_bar, geom_point, labs
     >>> 
     >>> # Create bar chart of articles by source
-    >>> ("https://news.com" >> 
-    ...  FetchLinks() >>
-    ...  ExtractArticles() >>
-    ...  ToPipeFrame() >>
-    ...  ggplot(aes(x='source')) >>
-    ...  geom_bar() >>
-    ...  labs(title='Articles by Source', x='Source', y='Count'))
+    >>> ("https://news.com"
+    ...  >> FetchLinks()
+    ...  >> ExtractArticles()
+    ...  >> ToPipeFrame()
+    ...  >> ggplot(aes(x='source'))
+    ...  >> geom_bar()
+    ...  >> labs(title='Articles by Source', x='Source', y='Count'))
     
     >>> # Create scatter plot of article length vs date
-    >>> ("https://news.com" >> 
-    ...  FetchLinks() >>
-    ...  ExtractArticles() >>
-    ...  ToPipeFrame() >>
-    ...  mutate(text_length=lambda df: df['text'].str.len()) >>
-    ...  ggplot(aes(x='date_published', y='text_length', color='source')) >>
-    ...  geom_point() >>
-    ...  labs(title='Article Length Over Time', x='Date', y='Text Length'))
+    >>> ("https://news.com"
+    ...  >> FetchLinks()
+    ...  >> ExtractArticles()
+    ...  >> ToPipeFrame()
+    ...  >> mutate(text_length=lambda df: df['text'].str.len())
+    ...  >> ggplot(aes(x='date_published', y='text_length', color='source'))
+    ...  >> geom_point()
+    ...  >> labs(title='Article Length Over Time', x='Date', y='Text Length'))
 """
 
 import logging
@@ -141,10 +141,10 @@ def create_articles_by_source_chart(df: 'pd.DataFrame', **kwargs):
     
     title = kwargs.get('title', 'Articles by Source')
     
-    return (df >>
-            ggplot(aes(x='source')) >>
-            geom_bar() >>
-            labs(title=title, x='Source', y='Article Count'))
+    return (df
+            >> ggplot(aes(x='source'))
+            >> geom_bar()
+            >> labs(title=title, x='Source', y='Article Count'))
 
 
 def create_articles_timeline(df: 'pd.DataFrame', **kwargs):
@@ -177,10 +177,10 @@ def create_articles_timeline(df: 'pd.DataFrame', **kwargs):
     
     title = kwargs.get('title', 'Articles Published Over Time')
     
-    return (df_copy >>
-            ggplot(aes(x='date_published')) >>
-            geom_line(stat='count') >>
-            labs(title=title, x='Date', y='Article Count'))
+    return (df_copy
+            >> ggplot(aes(x='date_published'))
+            >> geom_line(stat='count')
+            >> labs(title=title, x='Date', y='Article Count'))
 
 
 def create_text_length_distribution(df: 'pd.DataFrame', **kwargs):
@@ -211,10 +211,10 @@ def create_text_length_distribution(df: 'pd.DataFrame', **kwargs):
     title = kwargs.get('title', 'Distribution of Article Lengths')
     bins = kwargs.get('bins', 30)
     
-    return (df_copy >>
-            ggplot(aes(x='text_length')) >>
-            geom_histogram(bins=bins) >>
-            labs(title=title, x='Text Length (characters)', y='Count'))
+    return (df_copy
+            >> ggplot(aes(x='text_length'))
+            >> geom_histogram(bins=bins)
+            >> labs(title=title, x='Text Length (characters)', y='Count'))
 
 
 def create_articles_by_language(df: 'pd.DataFrame', **kwargs):
@@ -240,10 +240,10 @@ def create_articles_by_language(df: 'pd.DataFrame', **kwargs):
     
     title = kwargs.get('title', 'Articles by Language')
     
-    return (df >>
-            ggplot(aes(x='language')) >>
-            geom_bar() >>
-            labs(title=title, x='Language', y='Article Count'))
+    return (df
+            >> ggplot(aes(x='language'))
+            >> geom_bar()
+            >> labs(title=title, x='Language', y='Article Count'))
 
 
 # Re-export commonly used PipePlotly functions with callable wrappers

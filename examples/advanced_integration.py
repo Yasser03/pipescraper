@@ -40,13 +40,13 @@ def example_1_pipeframe_basic():
     base_url = "https://news.ycombinator.com"
     
     try:
-        result = (base_url >> 
-                  FetchLinks(max_links=10) >>
-                  ExtractArticles() >>
-                  ToPipeFrame(include_text=False) >>
-                  select('title', 'author', 'date_published', 'source') >>
-                  filter(lambda df: df['author'].notna()) >>
-                  arrange('date_published', ascending=False))
+        result = (base_url
+                  >> FetchLinks(max_links=10)
+                  >> ExtractArticles()
+                  >> ToPipeFrame(include_text=False)
+                  >> select('title', 'author', 'date_published', 'source')
+                  >> filter(lambda df: df['author'].notna())
+                  >> arrange('date_published', ascending=False))
         
         print(f"✓ Processed {len(result)} articles with PipeFrame")
         print(f"\nFirst few rows:")
@@ -76,17 +76,17 @@ def example_2_pipeframe_mutate():
     base_url = "https://news.ycombinator.com"
     
     try:
-        result = (base_url >> 
-                  FetchLinks(max_links=10) >>
-                  ExtractArticles() >>
-                  ToPipeFrame() >>
-                  mutate(
+        result = (base_url
+                  >> FetchLinks(max_links=10)
+                  >> ExtractArticles()
+                  >> ToPipeFrame()
+                  >> mutate(
                       text_length=lambda df: df['text'].str.len(),
                       has_author=lambda df: df['author'].notna(),
                       title_length=lambda df: df['title'].str.len()
-                  ) >>
-                  select('title', 'text_length', 'has_author', 'date_published') >>
-                  arrange('text_length', ascending=False))
+                  )
+                  >> select('title', 'text_length', 'has_author', 'date_published')
+                  >> arrange('text_length', ascending=False))
         
         print(f"✓ Created new columns with mutate")
         print(f"\nResults:")
@@ -116,18 +116,18 @@ def example_3_pipeframe_group_summarize():
     base_url = "https://news.ycombinator.com"
     
     try:
-        result = (base_url >> 
-                  FetchLinks(max_links=20) >>
-                  ExtractArticles() >>
-                  ToPipeFrame() >>
-                  mutate(text_length=lambda df: df['text'].str.len()) >>
-                  group_by('source') >>
-                  summarize(
+        result = (base_url
+                  >> FetchLinks(max_links=20)
+                  >> ExtractArticles()
+                  >> ToPipeFrame()
+                  >> mutate(text_length=lambda df: df['text'].str.len())
+                  >> group_by('source')
+                  >> summarize(
                       article_count=('title', 'count'),
                       avg_text_length=('text_length', 'mean'),
                       total_articles=('title', 'size')
-                  ) >>
-                  arrange('article_count', ascending=False))
+                  )
+                  >> arrange('article_count', ascending=False))
         
         print(f"✓ Grouped and summarized by source")
         print(f"\nResults:")
@@ -159,18 +159,18 @@ def example_4_pipeplotly_bar_chart():
     base_url = "https://news.ycombinator.com"
     
     try:
-        fig = (base_url >> 
-               FetchLinks(max_links=15) >>
-               ExtractArticles() >>
-               ToPipeFrame(include_text=False) >>
-               ggplot(aes(x='source')) >>
-               geom_bar() >>
-               labs(
+        fig = (base_url
+               >> FetchLinks(max_links=15)
+               >> ExtractArticles()
+               >> ToPipeFrame(include_text=False)
+               >> ggplot(aes(x='source'))
+               >> geom_bar()
+               >> labs(
                    title='Articles by Source',
                    x='Source',
                    y='Number of Articles'
-               ) >>
-               theme_minimal())
+               )
+               >> theme_minimal())
         
         print(f"✓ Created bar chart")
         print(f"✓ Figure object created (use .show() to display)")
@@ -202,23 +202,23 @@ def example_5_pipeplotly_scatter():
     base_url = "https://news.ycombinator.com"
     
     try:
-        fig = (base_url >> 
-               FetchLinks(max_links=20) >>
-               ExtractArticles() >>
-               ToPipeFrame() >>
-               mutate(
+        fig = (base_url
+               >> FetchLinks(max_links=20)
+               >> ExtractArticles()
+               >> ToPipeFrame()
+               >> mutate(
                    text_length=lambda df: df['text'].str.len(),
                    title_length=lambda df: df['title'].str.len()
-               ) >>
-               filter(lambda df: df['text_length'] > 0) >>
-               ggplot(aes(x='title_length', y='text_length', color='source')) >>
-               geom_point() >>
-               labs(
+               )
+               >> filter(lambda df: df['text_length'] > 0)
+               >> ggplot(aes(x='title_length', y='text_length', color='source'))
+               >> geom_point()
+               >> labs(
                    title='Article Title Length vs Text Length',
                    x='Title Length (characters)',
                    y='Text Length (characters)'
-               ) >>
-               theme_minimal())
+               )
+               >> theme_minimal())
         
         print(f"✓ Created scatter plot")
         print(f"✓ Figure object created (use .show() to display)")
@@ -251,20 +251,20 @@ def example_6_pipeplotly_timeline():
     base_url = "https://news.ycombinator.com"
     
     try:
-        fig = (base_url >> 
-               FetchLinks(max_links=20) >>
-               ExtractArticles() >>
-               ToPipeFrame(include_text=False) >>
-               filter(lambda df: df['date_published'].notna()) >>
-               mutate(date=lambda df: pd.to_datetime(df['date_published'])) >>
-               ggplot(aes(x='date')) >>
-               geom_line(stat='count') >>
-               labs(
+        fig = (base_url
+               >> FetchLinks(max_links=20)
+               >> ExtractArticles()
+               >> ToPipeFrame(include_text=False)
+               >> filter(lambda df: df['date_published'].notna())
+               >> mutate(date=lambda df: pd.to_datetime(df['date_published']))
+               >> ggplot(aes(x='date'))
+               >> geom_line(stat='count')
+               >> labs(
                    title='Articles Published Over Time',
                    x='Publication Date',
                    y='Number of Articles'
-               ) >>
-               theme_minimal())
+               )
+               >> theme_minimal())
         
         print(f"✓ Created timeline visualization")
         print(f"✓ Figure object created (use .show() to display)")
@@ -299,18 +299,18 @@ def example_7_complete_pipeline():
     
     try:
         # Data pipeline
-        data = (base_url >> 
-                FetchLinks(max_links=20) >>
-                ExtractArticles(delay=2.0) >>
-                ToPipeFrame() >>
-                mutate(
+        data = (base_url
+                >> FetchLinks(max_links=20)
+                >> ExtractArticles(delay=2.0)
+                >> ToPipeFrame()
+                >> mutate(
                     text_length=lambda df: df['text'].str.len(),
                     has_author=lambda df: df['author'].notna()
-                ) >>
-                filter(lambda df: df['text_length'] > 500) >>
-                select('title', 'author', 'source', 'date_published', 
-                       'text_length', 'has_author') >>
-                arrange('date_published', ascending=False))
+                )
+                >> filter(lambda df: df['text_length'] > 500)
+                >> select('title', 'author', 'source', 'date_published', 
+                       'text_length', 'has_author')
+                >> arrange('date_published', ascending=False))
         
         # Save processed data
         data >> SaveAs("output/processed_articles.csv")
@@ -359,10 +359,10 @@ def example_8_helper_visualizations():
     
     try:
         # Get data
-        data = (base_url >> 
-                FetchLinks(max_links=15) >>
-                ExtractArticles() >>
-                ToPipeFrame())
+        data = (base_url
+                >> FetchLinks(max_links=15)
+                >> ExtractArticles()
+                >> ToPipeFrame())
         
         # Create multiple visualizations
         fig1 = create_articles_by_source_chart(data)

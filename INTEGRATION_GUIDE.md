@@ -59,13 +59,13 @@ All PipeFrame verbs can be imported directly from `pipescraper` or from `pipefra
 from pipescraper import FetchLinks, ExtractArticles, ToPipeFrame
 from pipeframe import select, filter, arrange
 
-result = ("https://www.bbc.com/news" >>   # Replace with your target URL
-          FetchLinks(max_links=20) >>
-          ExtractArticles() >>
-          ToPipeFrame() >>
-          select('title', 'author', 'date_published') >>
-          filter(lambda df: df['author'].notna()) >>
-          arrange('date_published', ascending=False))
+result = ("https://www.bbc.com/news"  # Replace with your target URL
+          >> FetchLinks(max_links=20)
+          >> ExtractArticles()
+          >> ToPipeFrame()
+          >> select('title', 'author', 'date_published')
+          >> filter(lambda df: df['author'].notna())
+          >> arrange('date_published', ascending=False))
 ```
 
 ### Data Transformation Example
@@ -74,21 +74,21 @@ result = ("https://www.bbc.com/news" >>   # Replace with your target URL
 from pipescraper import FetchLinks, ExtractArticles, ToPipeFrame, SaveAs
 from pipeframe import select, mutate, filter, arrange
 
-result = ("https://www.bbc.com/news" >>   # Replace with your target URL
-          FetchLinks(max_links=30) >>
-          ExtractArticles() >>
-          ToPipeFrame() >>
-          mutate(
+result = ("https://www.bbc.com/news"  # Replace with your target URL
+          >> FetchLinks(max_links=30)
+          >> ExtractArticles()
+          >> ToPipeFrame()
+          >> mutate(
               text_length=lambda df: df['text'].str.len(),
               title_length=lambda df: df['title'].str.len(),
               has_author=lambda df: df['author'].notna(),
               word_count=lambda df: df['text'].str.split().str.len()
-          ) >>
-          select('title', 'author', 'source', 'date_published',
-                 'text_length', 'word_count', 'has_author') >>
-          filter(lambda df: df['word_count'] > 100) >>
-          arrange('word_count', ascending=False) >>
-          SaveAs('processed_articles.csv'))
+          )
+          >> select('title', 'author', 'source', 'date_published',
+                 'text_length', 'word_count', 'has_author')
+          >> filter(lambda df: df['word_count'] > 100)
+          >> arrange('word_count', ascending=False)
+          >> SaveAs('processed_articles.csv'))
 
 print(f"Processed {len(result)} articles")
 ```
@@ -99,18 +99,18 @@ print(f"Processed {len(result)} articles")
 from pipescraper import FetchLinks, ExtractArticles, ToPipeFrame
 from pipeframe import group_by, summarize, mutate, arrange
 
-summary = ("https://www.bbc.com/news" >>   # Replace with your target URL
-           FetchLinks(max_links=50) >>
-           ExtractArticles() >>
-           ToPipeFrame() >>
-           mutate(text_length=lambda df: df['text'].str.len()) >>
-           group_by('source') >>
-           summarize(
+summary = ("https://www.bbc.com/news"  # Replace with your target URL
+           >> FetchLinks(max_links=50)
+           >> ExtractArticles()
+           >> ToPipeFrame()
+           >> mutate(text_length=lambda df: df['text'].str.len())
+           >> group_by('source')
+           >> summarize(
                article_count=('title', 'count'),
                avg_text_length=('text_length', 'mean'),
                total_words=('text_length', 'sum')
-           ) >>
-           arrange('article_count', ascending=False))
+           )
+           >> arrange('article_count', ascending=False))
 
 print(summary)
 ```
@@ -159,14 +159,14 @@ All PipePlotly functions can be imported directly from `pipescraper` or from `pi
 from pipescraper import FetchLinks, ExtractArticles, ToPipeFrame
 from pipeplotly import ggplot, aes, geom_bar, labs, theme_minimal
 
-fig = ("https://www.bbc.com/news" >>   # Replace with your target URL
-       FetchLinks(max_links=20) >>
-       ExtractArticles() >>
-       ToPipeFrame(include_text=False) >>
-       ggplot(aes(x='source')) >>
-       geom_bar() >>
-       labs(title='Articles by Source', x='Source', y='Count') >>
-       theme_minimal())
+fig = ("https://www.bbc.com/news"  # Replace with your target URL
+       >> FetchLinks(max_links=20)
+       >> ExtractArticles()
+       >> ToPipeFrame(include_text=False)
+       >> ggplot(aes(x='source'))
+       >> geom_bar()
+       >> labs(title='Articles by Source', x='Source', y='Count')
+       >> theme_minimal())
 
 fig.show()
 ```
@@ -178,23 +178,23 @@ from pipescraper import FetchLinks, ExtractArticles, ToPipeFrame
 from pipeframe import mutate, filter
 from pipeplotly import ggplot, aes, geom_point, labs, theme_minimal
 
-fig = ("https://www.bbc.com/news" >>   # Replace with your target URL
-       FetchLinks(max_links=30) >>
-       ExtractArticles() >>
-       ToPipeFrame() >>
-       mutate(
+fig = ("https://www.bbc.com/news"  # Replace with your target URL
+       >> FetchLinks(max_links=30)
+       >> ExtractArticles()
+       >> ToPipeFrame()
+       >> mutate(
            text_length=lambda df: df['text'].str.len(),
            title_length=lambda df: df['title'].str.len()
-       ) >>
-       filter(lambda df: df['text_length'] > 0) >>
-       ggplot(aes(x='title_length', y='text_length', color='source')) >>
-       geom_point() >>
-       labs(
+       )
+       >> filter(lambda df: df['text_length'] > 0)
+       >> ggplot(aes(x='title_length', y='text_length', color='source'))
+       >> geom_point()
+       >> labs(
            title='Article Title Length vs Text Length',
            x='Title Length (characters)',
            y='Text Length (characters)'
-       ) >>
-       theme_minimal())
+       )
+       >> theme_minimal())
 
 fig.show()
 ```
@@ -207,15 +207,15 @@ from pipeframe import filter, mutate
 from pipeplotly import ggplot, aes, geom_line, labs
 import pandas as pd
 
-fig = ("https://www.bbc.com/news" >>   # Replace with your target URL
-       FetchLinks(max_links=50) >>
-       ExtractArticles() >>
-       ToPipeFrame(include_text=False) >>
-       filter(lambda df: df['date_published'].notna()) >>
-       mutate(date=lambda df: pd.to_datetime(df['date_published'])) >>
-       ggplot(aes(x='date')) >>
-       geom_line(stat='count') >>
-       labs(
+fig = ("https://www.bbc.com/news"  # Replace with your target URL
+       >> FetchLinks(max_links=50)
+       >> ExtractArticles()
+       >> ToPipeFrame(include_text=False)
+       >> filter(lambda df: df['date_published'].notna())
+       >> mutate(date=lambda df: pd.to_datetime(df['date_published']))
+       >> ggplot(aes(x='date'))
+       >> geom_line(stat='count')
+       >> labs(
            title='Articles Published Over Time',
            x='Publication Date',
            y='Number of Articles'
@@ -240,10 +240,10 @@ from pipescraper import (
 )
 
 # Get data
-data = ("https://www.bbc.com/news" >>   # Replace with your target URL
-        FetchLinks(max_links=30) >>
-        ExtractArticles() >>
-        ToPipeFrame())
+data = ("https://www.bbc.com/news"  # Replace with your target URL
+        >> FetchLinks(max_links=30)
+        >> ExtractArticles()
+        >> ToPipeFrame())
 
 # Create visualizations
 fig1 = create_articles_by_source_chart(data, title='Source Distribution')
@@ -273,30 +273,30 @@ from pipescraper import (
 from pipeframe import select, filter, mutate, arrange, group_by, summarize
 
 # 1. Scrape and Transform (Google News Search)
-data = (FetchGoogleNews(search="renewable energy breakthroughs", period="7d", max_results=30) >> 
-        ExtractArticles(workers=5, delay=0.5) >>
-        ToPipeFrame() >>
-        mutate(
+data = (FetchGoogleNews(search="renewable energy breakthroughs", period="7d", max_results=30)
+        >> ExtractArticles(workers=5, delay=0.5)
+        >> ToPipeFrame()
+        >> mutate(
             text_length=lambda df: df['text'].str.len(),
             word_count=lambda df: df['text'].str.split().str.len(),
             has_author=lambda df: df['author'].notna()
-        ) >>
-        filter(lambda df: df['word_count'] > 100) >>
-        select('title', 'author', 'source', 'date_published',
+        )
+        >> filter(lambda df: df['word_count'] > 100)
+        >> select('title', 'author', 'source', 'date_published',
                'text_length', 'word_count'))
 
 # 2. Save Processed Data
 data >> SaveAs('processed_articles.csv')
 
 # 3. Create Summary Statistics
-summary = (data >>
-           group_by('source') >>
-           summarize(
+summary = (data
+           >> group_by('source')
+           >> summarize(
                article_count=('title', 'count'),
                avg_words=('word_count', 'mean'),
                total_articles=('title', 'size')
-           ) >>
-           arrange('article_count', ascending=False))
+           )
+           >> arrange('article_count', ascending=False))
 
 summary >> SaveAs('article_summary.csv')
 
@@ -321,14 +321,14 @@ If you're doing any data transformation, use `ToPipeFrame()` instead of `ToDataF
 
 ```python
 # Good - uses PipeFrame
-result = (articles >> 
-          ToPipeFrame() >>
-          select('title', 'author') >>
-          filter(lambda df: df['author'].notna()))
+result = (articles
+          >> ToPipeFrame()
+          >> select('title', 'author')
+          >> filter(lambda df: df['author'].notna()))
 
 # Less optimal - converts to pandas then manually transforms
-result = (articles >> 
-          ToDataFrame())
+result = (articles
+          >> ToDataFrame())
 result = result[['title', 'author']]
 result = result[result['author'].notna()]
 ```
@@ -339,10 +339,10 @@ Large text fields can slow down transformations and visualizations:
 
 ```python
 # Exclude text when not needed
-data = (articles >> 
-        ToPipeFrame(include_text=False) >>
-        ggplot(aes(x='source')) >>
-        geom_bar())
+data = (articles
+        >> ToPipeFrame(include_text=False)
+        >> ggplot(aes(x='source'))
+        >> geom_bar())
 ```
 
 ### 3. Chain Mutate Operations
@@ -350,10 +350,10 @@ data = (articles >>
 Multiple `mutate()` calls can be chained for clarity:
 
 ```python
-data = (articles >>
-        ToPipeFrame() >>
-        mutate(text_length=lambda df: df['text'].str.len()) >>
-        mutate(is_long=lambda df: df['text_length'] > 1000))
+data = (articles
+        >> ToPipeFrame()
+        >> mutate(text_length=lambda df: df['text'].str.len())
+        >> mutate(is_long=lambda df: df['text_length'] > 1000))
 ```
 
 ### 4. Use Helper Functions for Common Visualizations
@@ -365,10 +365,10 @@ Built-in helpers save time for standard charts:
 fig = create_articles_by_source_chart(data)
 
 # vs manual construction
-fig = (data >>
-       ggplot(aes(x='source')) >>
-       geom_bar() >>
-       labs(title='Articles by Source'))
+fig = (data
+       >> ggplot(aes(x='source'))
+       >> geom_bar()
+       >> labs(title='Articles by Source'))
 ```
 
 ## 🔍 Checking Integration Availability

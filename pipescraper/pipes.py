@@ -6,22 +6,22 @@ inspired by pipeframe and pipeplotly. Each verb class implements __rrshift__
 to enable chaining operations.
 
 Example:
-    >>> ("https://news.site.com" >> 
-    ...  FetchLinks() >> 
-    ...  ExtractArticles() >> 
-    ...  ToDataFrame() >> 
-    ...  SaveAs("output.csv"))
+    >>> ("https://news.site.com"
+    ...  >> FetchLinks()
+    ...  >> ExtractArticles()
+    ...  >> ToDataFrame()
+    ...  >> SaveAs("output.csv"))
     
     >>> # With PipeFrame integration
     >>> from pipeframe import select, filter, arrange
-    >>> ("https://news.site.com" >> 
-    ...  FetchLinks() >> 
-    ...  ExtractArticles() >> 
-    ...  ToPipeFrame() >>
-    ...  select('title', 'author', 'date_published') >>
-    ...  filter(lambda df: df['author'].notna()) >>
-    ...  arrange('date_published', ascending=False) >>
-    ...  SaveAs("articles.csv"))
+    >>> ("https://news.site.com"
+    ...  >> FetchLinks()
+    ...  >> ExtractArticles()
+    ...  >> ToPipeFrame()
+    ...  >> select('title', 'author', 'date_published')
+    ...  >> filter(lambda df: df['author'].notna())
+    ...  >> arrange('date_published', ascending=False)
+    ...  >> SaveAs("articles.csv"))
 """
 
 import logging
@@ -379,11 +379,11 @@ class ToPipeFrame(PipeBase):
     
     Example:
         >>> from pipeframe import select, filter, arrange
-        >>> pf = (articles >> 
-        ...       ToPipeFrame() >>
-        ...       select('title', 'author', 'date_published') >>
-        ...       filter(lambda df: df['author'].notna()) >>
-        ...       arrange('date_published', ascending=False))
+        >>> pf = (articles
+        ...       >> ToPipeFrame()
+        ...       >> select('title', 'author', 'date_published')
+        ...       >> filter(lambda df: df['author'].notna())
+        ...       >> arrange('date_published', ascending=False))
     
     Raises:
         ImportError: If pipeframe is not installed

@@ -9,22 +9,22 @@ visualization, enabling complete end-to-end pipelines from scraping to analysis.
 
 Example:
     >>> from pipescraper import FetchLinks, ExtractArticles, ToDataFrame, SaveAs
-    >>> ("https://www.bbc.com/news" >>   # Replace with your target URL
-    ...  FetchLinks() >> 
-    ...  ExtractArticles() >> 
-    ...  ToDataFrame() >> 
-    ...  SaveAs("articles.csv"))
+    >>> ("https://www.bbc.com/news"  # Replace with your target URL
+    ...  >> FetchLinks()
+    ...  >> ExtractArticles()
+    ...  >> ToDataFrame()
+    ...  >> SaveAs("articles.csv"))
     
     >>> # With PipeFrame integration
     >>> from pipescraper import FetchLinks, ExtractArticles, ToPipeFrame
     >>> from pipeframe import select, filter, arrange
-    >>> ("https://www.bbc.com/news" >>   # Replace with your target URL
-    ...  FetchLinks() >> 
-    ...  ExtractArticles() >> 
-    ...  ToPipeFrame() >>
-    ...  select('title', 'author', 'date_published') >>
-    ...  filter(lambda df: df['author'].notna()) >>
-    ...  arrange('date_published', ascending=False))
+    >>> ("https://www.bbc.com/news"  # Replace with your target URL
+    ...  >> FetchLinks()
+    ...  >> ExtractArticles()
+    ...  >> ToPipeFrame()
+    ...  >> select('title', 'author', 'date_published')
+    ...  >> filter(lambda df: df['author'].notna())
+    ...  >> arrange('date_published', ascending=False))
 
 Author: pipescraper Contributors
 License: MIT

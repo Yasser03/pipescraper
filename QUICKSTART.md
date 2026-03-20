@@ -32,11 +32,11 @@ from pipescraper import FetchLinks, ExtractArticles, ToDataFrame, SaveAs
 ### 2. Create a Simple Pipeline
 
 ```python
-result = ("https://www.bbc.com/news" >>   # Replace with your target URL
-          FetchLinks(max_links=10) >> 
-          ExtractArticles() >> 
-          ToDataFrame() >> 
-          SaveAs("articles.csv"))
+result = ("https://www.bbc.com/news"  # Replace with your target URL
+          >> FetchLinks(max_links=10)
+          >> ExtractArticles()
+          >> ToDataFrame()
+          >> SaveAs("articles.csv"))
 
 print(f"Scraped {len(result)} articles!")
 ```
@@ -47,9 +47,9 @@ print(f"Scraped {len(result)} articles!")
 from pipescraper import FetchGoogleNews, ExtractArticles, ToDataFrame
 
 # Search for multiple topics at once
-articles = (FetchGoogleNews(search=["AI news", "latest tech"], max_results=10) >> 
-            ExtractArticles(workers=5) >> 
-            ToDataFrame())
+articles = (FetchGoogleNews(search=["AI news", "latest tech"], max_results=10)
+            >> ExtractArticles(workers=5)
+            >> ToDataFrame())
 
 print(f"Found {len(articles)} articles!")
 ```
@@ -82,36 +82,36 @@ Article(
 
 ```python
 # Only English articles with authors
-result = ("https://www.bbc.com/news" >>   # Replace with your target URL
-          FetchLinks(max_links=20) >>
-          ExtractArticles() >>
-          FilterArticles(lambda a: a.language == 'en') >>
-          FilterArticles(lambda a: bool(a.author)) >>
-          ToDataFrame() >>
-          SaveAs("filtered.csv"))
+result = ("https://www.bbc.com/news"  # Replace with your target URL
+          >> FetchLinks(max_links=20)
+          >> ExtractArticles()
+          >> FilterArticles(lambda a: a.language == 'en')
+          >> FilterArticles(lambda a: bool(a.author))
+          >> ToDataFrame()
+          >> SaveAs("filtered.csv"))
 ```
 
 ### Limit Results
 
 ```python
 # Get only the first 5 articles
-result = ("https://www.bbc.com/news" >>   # Replace with your target URL
-          FetchLinks(max_links=50) >>
-          ExtractArticles() >>
-          LimitArticles(5) >>
-          ToDataFrame() >>
-          SaveAs("top5.json"))
+result = ("https://www.bbc.com/news"  # Replace with your target URL
+          >> FetchLinks(max_links=50)
+          >> ExtractArticles()
+          >> LimitArticles(5)
+          >> ToDataFrame()
+          >> SaveAs("top5.json"))
 ```
 
 ### Turbo Scraping (Parallel)
 
 ```python
 # Speed up scraping with multiple workers (recommended: 5-10)
-result = ("https://www.bbc.com/news" >>   # Replace with your target URL
-          FetchLinks(max_links=50) >>
-          ExtractArticles(workers=5) >>
-          ToDataFrame() >>
-          SaveAs("fast_results.csv"))
+result = ("https://www.bbc.com/news"  # Replace with your target URL
+          >> FetchLinks(max_links=50)
+          >> ExtractArticles(workers=5)
+          >> ToDataFrame()
+          >> SaveAs("fast_results.csv"))
 
 print(f"Turbo Scraped {len(result)} articles in record time!")
 ```
@@ -119,10 +119,10 @@ print(f"Turbo Scraped {len(result)} articles in record time!")
 ### Multiple Export Formats
 
 ```python
-df = ("https://www.bbc.com/news" >>   # Replace with your target URL
-      FetchLinks(max_links=10) >>
-      ExtractArticles() >>
-      ToDataFrame())
+df = ("https://www.bbc.com/news"  # Replace with your target URL
+      >> FetchLinks(max_links=10)
+      >> ExtractArticles()
+      >> ToDataFrame())
 
 # Export to different formats
 df >> SaveAs("articles.csv")
@@ -135,10 +135,10 @@ df >> SaveAs("articles.parquet")
 
 ```python
 # Get DataFrame for analysis
-df = ("https://www.bbc.com/news" >>   # Replace with your target URL
-      FetchLinks(max_links=20) >>
-      ExtractArticles() >>
-      ToDataFrame())
+df = ("https://www.bbc.com/news"  # Replace with your target URL
+      >> FetchLinks(max_links=20)
+      >> ExtractArticles()
+      >> ToDataFrame())
 
 # Use pandas operations
 print(df.info())
@@ -155,24 +155,24 @@ df_sorted = df.sort_values('date_published', ascending=False)
 
 ```python
 # Add delays and respect robots.txt
-result = ("https://www.bbc.com/news" >>   # Replace with your target URL
-          FetchLinks(
+result = ("https://www.bbc.com/news"  # Replace with your target URL
+          >> FetchLinks(
               max_links=10,
               respect_robots=True,    # Check robots.txt
               delay=2.0,              # 2s between page requests
               user_agent="MyBot/1.0"  # Identify yourself
-          ) >>
-          ExtractArticles(delay=2.0) >>  # 2s between articles
-          ToDataFrame() >>
-          SaveAs("articles.csv"))
+          )
+          >> ExtractArticles(delay=2.0)  # 2s between articles
+          >> ToDataFrame()
+          >> SaveAs("articles.csv"))
 ```
 
 ### Skip Failed Extractions
 
 ```python
 # Continue even if some articles fail
-articles = (urls >> 
-            ExtractArticles(
+articles = (urls
+            >> ExtractArticles(
                 skip_errors=True,  # Don't raise on failures
                 timeout=15         # 15s timeout per article
             ))

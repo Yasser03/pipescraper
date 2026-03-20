@@ -9,13 +9,13 @@ Example:
     >>> from pipescraper import FetchLinks, ExtractArticles, ToPipeFrame
     >>> from pipeframe import select, filter, arrange
     >>> 
-    >>> result = ("https://news.com" >> 
-    ...           FetchLinks() >>
-    ...           ExtractArticles() >>
-    ...           ToPipeFrame() >>
-    ...           select('title', 'author', 'date_published') >>
-    ...           filter(lambda df: df['author'].notna()) >>
-    ...           arrange('date_published', ascending=False))
+    >>> result = ("https://news.com"
+    ...           >> FetchLinks()
+    ...           >> ExtractArticles()
+    ...           >> ToPipeFrame()
+    ...           >> select('title', 'author', 'date_published')
+    ...           >> filter(lambda df: df['author'].notna())
+    ...           >> arrange('date_published', ascending=False))
 """
 
 import logging

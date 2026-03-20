@@ -320,10 +320,10 @@ class TestPipes:
     
     def test_chained_pipes(self, sample_articles):
         """Test chaining multiple pipe operations."""
-        result = (sample_articles >> 
-                  FilterArticles(lambda a: True) >>
-                  LimitArticles(3) >>
-                  ToDataFrame())
+        result = (sample_articles
+                  >> FilterArticles(lambda a: True)
+                  >> LimitArticles(3)
+                  >> ToDataFrame())
         
         assert isinstance(result, pd.DataFrame)
         assert len(result) == 3
@@ -354,11 +354,11 @@ class TestIntegration:
         output_file = tmp_path / "output.csv"
         
         # Run full pipeline
-        result = ("https://example.com" >> 
-                  FetchLinks(max_links=10) >>
-                  ExtractArticles() >>
-                  ToDataFrame() >>
-                  SaveAs(str(output_file)))
+        result = ("https://example.com"
+                  >> FetchLinks(max_links=10)
+                  >> ExtractArticles()
+                  >> ToDataFrame()
+                  >> SaveAs(str(output_file)))
         
         # Verify results
         assert output_file.exists()

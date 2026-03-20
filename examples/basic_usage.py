@@ -30,11 +30,11 @@ def example_1_basic_pipeline():
     base_url = "https://news.ycombinator.com"
     
     try:
-        result = (base_url >> 
-                  FetchLinks(max_links=5) >>
-                  ExtractArticles(delay=2.0) >>
-                  ToDataFrame() >>
-                  SaveAs("output/articles_basic.csv"))
+        result = (base_url
+                  >> FetchLinks(max_links=5)
+                  >> ExtractArticles(delay=2.0)
+                  >> ToDataFrame()
+                  >> SaveAs("output/articles_basic.csv"))
         
         print(f"✓ Scraped and saved {len(result)} articles")
         print(f"✓ Output: output/articles_basic.csv")
@@ -57,13 +57,13 @@ def example_2_filtered_pipeline():
     base_url = "https://news.ycombinator.com"
     
     try:
-        result = (base_url >> 
-                  FetchLinks(max_links=10) >>
-                  ExtractArticles() >>
-                  FilterArticles(lambda a: bool(a.author)) >>  # Only with authors
-                  FilterArticles(lambda a: a.language == 'en') >>  # English only
-                  ToDataFrame() >>
-                  SaveAs("output/articles_filtered.csv"))
+        result = (base_url
+                  >> FetchLinks(max_links=10)
+                  >> ExtractArticles()
+                  >> FilterArticles(lambda a: bool(a.author))  # Only with authors
+                  >> FilterArticles(lambda a: a.language == 'en')  # English only
+                  >> ToDataFrame()
+                  >> SaveAs("output/articles_filtered.csv"))
         
         print(f"✓ Filtered and saved {len(result)} articles")
         print(f"✓ Output: output/articles_filtered.csv")
@@ -85,12 +85,12 @@ def example_3_limited_pipeline():
     base_url = "https://news.ycombinator.com"
     
     try:
-        result = (base_url >> 
-                  FetchLinks(max_links=20) >>
-                  ExtractArticles() >>
-                  LimitArticles(5) >>  # Keep only first 5
-                  ToDataFrame() >>
-                  SaveAs("output/articles_limited.json"))  # Save as JSON
+        result = (base_url
+                  >> FetchLinks(max_links=20)
+                  >> ExtractArticles()
+                  >> LimitArticles(5)  # Keep only first 5
+                  >> ToDataFrame()
+                  >> SaveAs("output/articles_limited.json"))  # Save as JSON
         
         print(f"✓ Limited to {len(result)} articles")
         print(f"✓ Output: output/articles_limited.json")
@@ -112,12 +112,12 @@ def example_4_deduplication():
     base_url = "https://news.ycombinator.com"
     
     try:
-        result = (base_url >> 
-                  FetchLinks(max_links=15) >>
-                  ExtractArticles() >>
-                  Deduplicate() >>  # Remove duplicates
-                  ToDataFrame() >>
-                  SaveAs("output/articles_unique.csv"))
+        result = (base_url
+                  >> FetchLinks(max_links=15)
+                  >> ExtractArticles()
+                  >> Deduplicate()  # Remove duplicates
+                  >> ToDataFrame()
+                  >> SaveAs("output/articles_unique.csv"))
         
         print(f"✓ Deduplicated to {len(result)} unique articles")
         print(f"✓ Output: output/articles_unique.csv")
@@ -139,11 +139,11 @@ def example_5_excel_output():
     base_url = "https://news.ycombinator.com"
     
     try:
-        result = (base_url >> 
-                  FetchLinks(max_links=10) >>
-                  ExtractArticles() >>
-                  ToDataFrame(include_text=False) >>  # Exclude text for smaller file
-                  SaveAs("output/articles.xlsx"))
+        result = (base_url
+                  >> FetchLinks(max_links=10)
+                  >> ExtractArticles()
+                  >> ToDataFrame(include_text=False)  # Exclude text for smaller file
+                  >> SaveAs("output/articles.xlsx"))
         
         print(f"✓ Saved {len(result)} articles to Excel")
         print(f"✓ Output: output/articles.xlsx")
@@ -167,10 +167,10 @@ def example_6_direct_url_extraction():
     article_url = "https://example.com/article"
     
     try:
-        result = (article_url >>
-                  ExtractArticles() >>
-                  ToDataFrame() >>
-                  SaveAs("output/single_article.csv"))
+        result = (article_url
+                  >> ExtractArticles()
+                  >> ToDataFrame()
+                  >> SaveAs("output/single_article.csv"))
         
         print(f"✓ Extracted {len(result)} article")
         print(f"✓ Output: output/single_article.csv")
@@ -193,13 +193,13 @@ def example_7_custom_filtering():
     
     try:
         # Complex filter: articles with text > 500 chars and published date
-        result = (base_url >> 
-                  FetchLinks(max_links=15) >>
-                  ExtractArticles() >>
-                  FilterArticles(lambda a: len(a.text) > 500) >>
-                  FilterArticles(lambda a: bool(a.date_published)) >>
-                  ToDataFrame() >>
-                  SaveAs("output/articles_custom.csv"))
+        result = (base_url
+                  >> FetchLinks(max_links=15)
+                  >> ExtractArticles()
+                  >> FilterArticles(lambda a: len(a.text) > 500)
+                  >> FilterArticles(lambda a: bool(a.date_published))
+                  >> ToDataFrame()
+                  >> SaveAs("output/articles_custom.csv"))
         
         print(f"✓ Custom filtered to {len(result)} articles")
         print(f"✓ Output: output/articles_custom.csv")
@@ -221,10 +221,10 @@ def example_8_inspect_dataframe():
     base_url = "https://news.ycombinator.com"
     
     try:
-        df = (base_url >> 
-              FetchLinks(max_links=5) >>
-              ExtractArticles() >>
-              ToDataFrame())
+        df = (base_url
+              >> FetchLinks(max_links=5)
+              >> ExtractArticles()
+              >> ToDataFrame())
         
         print(f"✓ Extracted {len(df)} articles")
         print(f"\nDataFrame Info:")
@@ -255,15 +255,15 @@ def example_9_respecting_robots():
     base_url = "https://news.ycombinator.com"
     
     try:
-        result = (base_url >> 
-                  FetchLinks(
+        result = (base_url
+                  >> FetchLinks(
                       max_links=5,
                       respect_robots=True,  # Respect robots.txt
                       delay=3.0,  # 3 second delay between requests
-                  ) >>
-                  ExtractArticles(delay=3.0) >>  # Also delay article extraction
-                  ToDataFrame() >>
-                  SaveAs("output/articles_respectful.csv"))
+                  )
+                  >> ExtractArticles(delay=3.0)  # Also delay article extraction
+                  >> ToDataFrame()
+                  >> SaveAs("output/articles_respectful.csv"))
         
         print(f"✓ Respectfully scraped {len(result)} articles")
         print(f"✓ Output: output/articles_respectful.csv")
@@ -289,11 +289,11 @@ def example_11_turbo_scraping():
     try:
         start_time = time.time()
         # Use 10 parallel workers for extraction
-        result = (base_url >> 
-                  FetchLinks(max_links=10) >>
-                  ExtractArticles(workers=10) >>
-                  ToDataFrame() >>
-                  SaveAs("output/articles_turbo.csv"))
+        result = (base_url
+                  >> FetchLinks(max_links=10)
+                  >> ExtractArticles(workers=10)
+                  >> ToDataFrame()
+                  >> SaveAs("output/articles_turbo.csv"))
         duration = time.time() - start_time
         
         print(f"✓ Turbo scraped {len(result)} articles in {duration:.2f} seconds")
