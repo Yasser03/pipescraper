@@ -332,7 +332,7 @@ If you use PipeScraper in your research or project, please cite it as follows:
 ## 🙏 Acknowledgments
 
 - **[trafilatura](https://github.com/adbar/trafilatura)** — Core content extraction engine
-- **newspaper4k** — Supplementary time extraction
+- **[newspaper4k](https://github.com/AndyTheFactory/newspaper4k)** — Supplementary time extraction
 - **[pipeframe](https://github.com/Yasser03/pipeframe)** — Inspiration for pipe-based syntax
 - **[pipeplotly](https://github.com/Yasser03/pipeplotly)** — Pipe pattern implementation reference
 
